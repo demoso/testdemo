@@ -8,6 +8,6 @@ import org.apache.ibatis.annotations.Select;
 
 @Mapper
 public interface TestRoleMapper extends BaseMapper<TestRole> {
-    @Select("select b.* from test_user a left join test_role b  on  a.nickname=b.role_name where  b.role_name = #{name}")
+    @Select("select b.* from test_user a left join test_role b  on  a.nickname=b.role_name join test_role c on a.nickname=c.role_name where  b.role_name = #{name}")
     TestRole find(String name);
 }
