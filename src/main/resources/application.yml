@@ -1,0 +1,76 @@
+spring:
+  application:
+    name: mytestPj0
+  messages:
+    basename: i18n/messages
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+    default-property-inclusion: non_null
+  datasource:
+    url: jdbc:mysql://${MYSQL_HOST:192.168.1.225}:${MYSQL_PORT:3306}/hq_user?useUnicode=true&characterEncoding=UTF8
+    username: root
+    password: XJFxjf123
+    type: com.zaxxer.hikari.HikariDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      connection-test-query: SELECT 1
+      idle-timeout: 30000
+      max-lifetime: 1880000
+      connection-timeout: 30000
+      minimum-idle: 10000
+      validation-timeout: 60000
+      auto-commit: true
+      pool-name: AuthHikariCP
+  redis:
+    #    cluster:
+    #      nodes:
+    #        - 192.168.14.231:6379
+    #        - 192.168.14.232:6379
+    #        - 192.168.14.233:6379
+    #    sentinel:
+    #      master:
+    #      nodes:
+    host: ${REDIS_HOST:192.168.1.225}
+    port: ${REDIS_PORT:6379}
+    password: ${REDIS_PASSWORD:fuckuhacker}
+    database: 0
+    lettuce:
+      pool:
+        # 连接池最大连接数（使用负值表示没有限制） 默认 8
+        max-active: 16
+        #连接池中的最小空闲连接
+        min-idle: 1
+        # 连接池最大空闲连接数 默认 8
+        max-idle: 8
+jcache:
+  statIntervalMinutes: 1
+  areaInCacheName: false
+  local:
+    default:
+      type: linkedhashmap
+      keyConvertor: fastjson
+      limit: 100
+  remote:
+    default:
+      type: redis.springdata
+      keyConvertor: fastjson
+      valueEncoder: java
+      valueDecoder: java
+
+#      poolConfig:
+#        minIdle: 5
+#        maxIdle: 20
+#        maxTotal: 50
+#      host: ${REDIS_HOST:192.168.1.225}
+#      port: ${REDIS_PORT:6379}
+#      password: ${REDIS_PASSWORD:fuckuhacker}
+#      database: 1
+logging:
+  level:
+    com.example.demo: debug
+    com.hq.cloud.jcache: debug
+  pattern:
+    console: "[%date] %highlight([%level]) [%file:%line] %msg%n"
+
+

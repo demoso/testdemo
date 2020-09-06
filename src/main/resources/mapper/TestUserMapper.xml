@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.TestUserMapper">
+	<!-- 通用查询映射结果 -->
+	<resultMap id="testUserMap" type="com.example.demo.entity.TestUser">
+		<id column="id" property="id"/>
+		<result column="nickname" property="nickName"/>
+		<result column="mobile" property="mobile"/>
+		<result column="tenant_id" property="tenantId"/>
+	</resultMap>
+
+
+	<select id="mySelect" resultMap="testUserMap">
+		select * from test_user a,test_role b  where a.nickname=b.role_name and  a.nickname = #{name}
+	</select>
+</mapper>
