@@ -7,16 +7,9 @@
 //import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
 //import com.baomidou.mybatisplus.extension.plugins.tenant.TenantHandler;
 //import com.baomidou.mybatisplus.extension.plugins.tenant.TenantSqlParser;
-//import com.github.zuihou.context.BaseContextHandler;
-//import com.github.zuihou.database.injector.MySqlInjector;
-//import com.github.zuihou.database.mybatis.WriteInterceptor;
-//import com.github.zuihou.database.mybatis.typehandler.FullLikeTypeHandler;
-//import com.github.zuihou.database.mybatis.typehandler.LeftLikeTypeHandler;
-//import com.github.zuihou.database.mybatis.typehandler.RightLikeTypeHandler;
-//import com.github.zuihou.database.parsers.DynamicTableNameParser;
-//import com.github.zuihou.database.properties.DatabaseProperties;
-//import com.github.zuihou.database.properties.MultiTenantType;
-//import com.github.zuihou.database.servlet.TenantWebMvcConfigurer;
+//
+//import com.example.demo.database.parsers.DynamicTableNameParser;
+//import com.example.demo.database.properties.MultiTenantType;
 //import lombok.extern.slf4j.Slf4j;
 //import net.sf.jsqlparser.expression.Expression;
 //import net.sf.jsqlparser.expression.StringValue;

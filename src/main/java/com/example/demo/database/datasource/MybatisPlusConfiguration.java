@@ -4,9 +4,14 @@ package com.example.demo.database.datasource;
 import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.autoconfigure.ConfigurationCustomizer;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
+import com.baomidou.mybatisplus.extension.plugins.handler.TableNameHandler;
 import com.baomidou.mybatisplus.extension.plugins.handler.TenantLineHandler;
+import com.baomidou.mybatisplus.extension.plugins.inner.DynamicTableNameInnerInterceptor;
+import com.baomidou.mybatisplus.extension.plugins.inner.OptimisticLockerInnerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.TenantLineInnerInterceptor;
+import com.example.demo.database.parsers.DynamicTableNameParser;
+import lombok.extern.slf4j.Slf4j;
 import net.sf.jsqlparser.expression.Expression;
 import net.sf.jsqlparser.expression.LongValue;
 import org.mybatis.spring.annotation.MapperScan;
@@ -16,12 +21,15 @@ import org.springframework.context.annotation.Configuration;
 
 import javax.sql.DataSource;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author jimmy
  * @date 2020-01-08
  */
+@Slf4j
 @Configuration
 //@MapperScan("com.example.demo.mapper")
 public class MybatisPlusConfiguration {
@@ -32,10 +40,29 @@ public class MybatisPlusConfiguration {
     @Bean
     public MybatisPlusInterceptor mybatisPlusInterceptor() {
         MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();
-        interceptor.addInnerInterceptor(new PaginationInnerInterceptor(DbType.MYSQL));
+        //行级别多租户
         TenantLineInnerInterceptor tenantLineInnerInterceptor= new TenantLineInnerInterceptor();
         tenantLineInnerInterceptor.setTenantLineHandler(() -> new LongValue(1L));
         interceptor.addInnerInterceptor(tenantLineInnerInterceptor);
+
+        //动态表名
+//        Map<String, TableNameHandler> tableNameHandlerMap = new HashMap<>();
+//        tableNameHandlerMap.put("test_user", new TableNameHandler() {
+//            @Override
+//            public String dynamicTableName(String sql, String tableName) {
+//                log.info("sql------>"+sql);
+//                log.info("tableName------>"+tableName);
+//                return "hq_user.test_user";
+//            }
+//        });
+//        DynamicTableNameInnerInterceptor dynamicTableNameInnerInterceptor=new DynamicTableNameInnerInterceptor();
+//        dynamicTableNameInnerInterceptor.setTableNameHandlerMap(tableNameHandlerMap);
+        //动态schema
+        interceptor.addInnerInterceptor(new DynamicTableNameInterceptor());
+        //分页插件
+        interceptor.addInnerInterceptor(new PaginationInnerInterceptor(DbType.MYSQL));
+        //乐观锁插件
+        interceptor.addInnerInterceptor(new OptimisticLockerInnerInterceptor());
         return interceptor;
     }
 
