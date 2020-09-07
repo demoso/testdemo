@@ -5,6 +5,9 @@ import com.example.demo.entity.TestRole;
 import com.example.demo.entity.TestUser;
 import com.example.demo.mapper.TestRoleMapper;
 import com.example.demo.mapper.TestUserMapper;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -12,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.Date;
 import java.util.List;
 @Slf4j
 @RunWith(SpringRunner.class)
@@ -42,4 +46,20 @@ public class TestMybatis {
          TestRole testRole3=testRoleMapper.find("于远");
          log.info("+++++++>"+JSON.toJSONString(testRole3));
      }
+
+     @Test
+    public void update(){
+         TestUser  testUsers=  testUserMapper.selectById(1L);
+         testUsers.setCreateTime(new Date());
+         testUsers.setUpdateTime(new Date());
+         testUsers.setMobile("18908519528");
+         testUserMapper.updateById(testUsers);
+         testUsers.setId(testUsers.getId()+5);
+         testUserMapper.insert(testUsers);
+     }
+
+    @Test
+    public void delete(){
+         testUserMapper.deleteById(6L);
+    }
 }
