@@ -4,26 +4,15 @@ package com.example.demo.database.datasource;
 import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.autoconfigure.ConfigurationCustomizer;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
-import com.baomidou.mybatisplus.extension.plugins.handler.TableNameHandler;
-import com.baomidou.mybatisplus.extension.plugins.handler.TenantLineHandler;
-import com.baomidou.mybatisplus.extension.plugins.inner.DynamicTableNameInnerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.OptimisticLockerInnerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.TenantLineInnerInterceptor;
-import com.example.demo.database.parsers.DynamicTableNameParser;
 import lombok.extern.slf4j.Slf4j;
-import net.sf.jsqlparser.expression.Expression;
 import net.sf.jsqlparser.expression.LongValue;
-import org.mybatis.spring.annotation.MapperScan;
 
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
-import javax.sql.DataSource;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * @author jimmy
@@ -31,7 +20,7 @@ import java.util.Map;
  */
 @Slf4j
 @Configuration
-//@MapperScan("com.example.demo.mapper")
+@MapperScan("com.example.demo.mapper")
 public class MybatisPlusConfiguration {
 
     /**
@@ -58,7 +47,15 @@ public class MybatisPlusConfiguration {
 //        DynamicTableNameInnerInterceptor dynamicTableNameInnerInterceptor=new DynamicTableNameInnerInterceptor();
 //        dynamicTableNameInnerInterceptor.setTableNameHandlerMap(tableNameHandlerMap);
         //动态schema
-        interceptor.addInnerInterceptor(new DynamicTableNameInterceptor());
+        DynamicSchemaInterceptor dynamicSchemaInterceptor=new DynamicSchemaInterceptor();
+        dynamicSchemaInterceptor.setTenantDatabasePrefix("hq");
+        dynamicSchemaInterceptor.setBaseTenantHandler(new BaseTenantHandler() {
+            @Override
+            public String getTenantId() {
+                return UserContextHandler.getTenant();
+            }
+        });
+        interceptor.addInnerInterceptor(dynamicSchemaInterceptor);
         //分页插件
         interceptor.addInnerInterceptor(new PaginationInnerInterceptor(DbType.MYSQL));
         //乐观锁插件

@@ -1,13 +1,20 @@
 package com.example.demo.controller;
 
+import com.example.demo.entity.TestUser;
+import com.example.demo.mapper.TestUserMapper;
 import com.hq.cloud.jcache.anno.Cache;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Date;
+
 
 @RestController
 public class TestCache {
+    @Autowired
+    private TestUserMapper testUserMapper;
 
     @RequestMapping("/hello")
     @ResponseBody
@@ -22,5 +29,17 @@ public class TestCache {
         }
         return  "welcome";
 
+    }
+    @RequestMapping("/update")
+    @ResponseBody
+    public String update(){
+        TestUser testUsers=  testUserMapper.selectById(1L);
+        testUsers.setCreateTime(new Date());
+        testUsers.setUpdateTime(new Date());
+        testUsers.setMobile("18908519528");
+        testUserMapper.updateById(testUsers);
+        testUsers.setId(testUsers.getId()+5);
+        testUserMapper.insert(testUsers);
+        return "ok";
     }
 }
