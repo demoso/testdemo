@@ -34,18 +34,6 @@ public class MybatisPlusConfiguration {
         tenantLineInnerInterceptor.setTenantLineHandler(() -> new LongValue(1L));
         interceptor.addInnerInterceptor(tenantLineInnerInterceptor);
 
-        //动态表名
-//        Map<String, TableNameHandler> tableNameHandlerMap = new HashMap<>();
-//        tableNameHandlerMap.put("test_user", new TableNameHandler() {
-//            @Override
-//            public String dynamicTableName(String sql, String tableName) {
-//                log.info("sql------>"+sql);
-//                log.info("tableName------>"+tableName);
-//                return "hq_user.test_user";
-//            }
-//        });
-//        DynamicTableNameInnerInterceptor dynamicTableNameInnerInterceptor=new DynamicTableNameInnerInterceptor();
-//        dynamicTableNameInnerInterceptor.setTableNameHandlerMap(tableNameHandlerMap);
         //动态schema
         DynamicSchemaInterceptor dynamicSchemaInterceptor=new DynamicSchemaInterceptor();
         dynamicSchemaInterceptor.setTenantDatabasePrefix("hq");
