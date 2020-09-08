@@ -1,6 +1,7 @@
 package com.example.demo;
 
 import com.alibaba.fastjson.JSON;
+import com.example.demo.database.datasource.UserContextHandler;
 import com.example.demo.entity.TestRole;
 import com.example.demo.entity.TestUser;
 import com.example.demo.mapper.TestRoleMapper;
@@ -49,6 +50,7 @@ public class TestMybatis {
 
      @Test
     public void update(){
+         UserContextHandler.setTenant("user");
          TestUser  testUsers=  testUserMapper.selectById(1L);
          testUsers.setCreateTime(new Date());
          testUsers.setUpdateTime(new Date());
@@ -60,6 +62,7 @@ public class TestMybatis {
 
     @Test
     public void delete(){
+        UserContextHandler.setTenant("user");
          testUserMapper.deleteById(6L);
     }
 }
