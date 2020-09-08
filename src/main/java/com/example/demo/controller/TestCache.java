@@ -38,8 +38,11 @@ public class TestCache {
         testUsers.setUpdateTime(new Date());
         testUsers.setMobile("18908519528");
         testUserMapper.updateById(testUsers);
-        testUsers.setId(testUsers.getId()+5);
-        testUserMapper.insert(testUsers);
+        //testUsers.setId();
+        TestUser testUsers2=new TestUser();
+        testUsers2.setMobile("18908519528");
+        testUsers2.setNickName("ooo");
+         testUserMapper.insert(testUsers2);
         return "ok";
     }
 }

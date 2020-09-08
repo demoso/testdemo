@@ -43,7 +43,9 @@ public class CommonUserAuthRestInterceptor extends HandlerInterceptorAdapter {
 //            return super.preHandle(request, response, handler);
 //        }
         String token = request.getHeader("token");
+        String name  = request.getParameter("userId");
         UserContextHandler.setTenant(token);
+        UserContextHandler.setUserId(name);
 //        if (StringUtils.isEmpty(token)) {
 //            if (request.getCookies() != null) {
 //                for (Cookie cookie : request.getCookies()) {

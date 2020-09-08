@@ -10,7 +10,7 @@ import java.util.Date;
 
 @Data
 @TableName(value = "test_user")
-public class TestUser {
+public class TestUser extends BasePo {
     private  Long id;
     @TableField(value = "nickname")
     private  String nickName;
