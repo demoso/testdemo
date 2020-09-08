@@ -20,27 +20,6 @@ import java.sql.Connection;
 public class DynamicSchemaInterceptor implements InnerInterceptor {
       private String tenantDatabasePrefix="";
       private BaseTenantHandler baseTenantHandler;
-     // @Value("${spring.application.name};
-//
-//    @Override
-//    public void beforeQuery(Executor executor, MappedStatement ms, Object parameter, RowBounds rowBounds, ResultHandler resultHandler, BoundSql boundSql) throws SQLException {
-//        log.info("运行到这里----》beforeQuery ==>ms.getId()"+ms.getId());
-//        PluginUtils.MPBoundSql mpBs = PluginUtils.mpBoundSql(boundSql);
-//        mpBs.sql(this.changeTable(mpBs.sql()));
-//    }
-
-
-
-//    @Override
-//    public void beforePrepare(StatementHandler sh, Connection connection, Integer transactionTimeout) {
-//        PluginUtils.MPStatementHandler mpSh = PluginUtils.mpStatementHandler(sh);
-//        MappedStatement ms = mpSh.mappedStatement();
-//        SqlCommandType sct = ms.getSqlCommandType();
-//        if (sct == SqlCommandType.INSERT || sct == SqlCommandType.UPDATE || sct == SqlCommandType.DELETE) {
-//            PluginUtils.MPBoundSql mpBs = mpSh.mPBoundSql();
-//            mpBs.sql(this.changeTable(mpBs.sql()));
-//        }
-//    }
     @Override
     public void beforePrepare(StatementHandler sh, Connection connection, Integer transactionTimeout) {
         PluginUtils.MPStatementHandler mpSh = PluginUtils.mpStatementHandler(sh);
@@ -62,5 +41,27 @@ public class DynamicSchemaInterceptor implements InnerInterceptor {
         //log.info("parsedSql-------------->"+parsedSql);
         return parsedSql;
     }
+
+// @Value("${spring.application.name};
+//
+//    @Override
+//    public void beforeQuery(Executor executor, MappedStatement ms, Object parameter, RowBounds rowBounds, ResultHandler resultHandler, BoundSql boundSql) throws SQLException {
+//        log.info("运行到这里----》beforeQuery ==>ms.getId()"+ms.getId());
+//        PluginUtils.MPBoundSql mpBs = PluginUtils.mpBoundSql(boundSql);
+//        mpBs.sql(this.changeTable(mpBs.sql()));
+//    }
+
+
+
+//    @Override
+//    public void beforePrepare(StatementHandler sh, Connection connection, Integer transactionTimeout) {
+//        PluginUtils.MPStatementHandler mpSh = PluginUtils.mpStatementHandler(sh);
+//        MappedStatement ms = mpSh.mappedStatement();
+//        SqlCommandType sct = ms.getSqlCommandType();
+//        if (sct == SqlCommandType.INSERT || sct == SqlCommandType.UPDATE || sct == SqlCommandType.DELETE) {
+//            PluginUtils.MPBoundSql mpBs = mpSh.mPBoundSql();
+//            mpBs.sql(this.changeTable(mpBs.sql()));
+//        }
+//    }
 
 }
