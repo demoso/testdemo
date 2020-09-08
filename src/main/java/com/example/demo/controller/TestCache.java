@@ -32,12 +32,16 @@ public class TestCache {
     }
     @RequestMapping("/update")
     @ResponseBody
-    public String update(){
-        TestUser testUsers=  testUserMapper.selectById(1L);
-        testUsers.setCreateTime(new Date());
-        testUsers.setUpdateTime(new Date());
-        testUsers.setMobile("18908519528");
-        testUserMapper.updateById(testUsers);
+    public String update(Long id){
+//        TestUser testUsers=  testUserMapper.selectById(id);
+//        testUsers.setMobile("18908519528");
+//        testUserMapper.updateById(testUsers);
+
+        TestUser testUsers5=new TestUser();
+        testUsers5.setId(id);
+        testUsers5.setMobile("18908519528");
+        testUsers5.setNickName("ooo");
+        testUserMapper.updateById(testUsers5);
         //testUsers.setId();
         TestUser testUsers2=new TestUser();
         testUsers2.setMobile("18908519528");

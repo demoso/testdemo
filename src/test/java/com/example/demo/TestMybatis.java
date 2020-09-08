@@ -52,8 +52,6 @@ public class TestMybatis {
     public void update(){
          UserContextHandler.setTenant("user");
          TestUser  testUsers=  testUserMapper.selectById(1L);
-         testUsers.setCreateTime(new Date());
-         testUsers.setUpdateTime(new Date());
          testUsers.setMobile("18908519528");
          testUserMapper.updateById(testUsers);
          testUsers.setId(testUsers.getId()+5);

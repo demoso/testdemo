@@ -11,15 +11,15 @@ import java.util.Date;
 @Data
 @TableName(value = "test_user")
 public class TestUser extends BasePo {
-    private  Long id;
+    //private  Long id;
     @TableField(value = "nickname")
     private  String nickName;
     private  String mobile;
     private  Long tenantId;
     @Version
     private Integer version;
-    private Date    updateTime;
-    private Date   createTime;
+//    private Date    updateTime;
+//    private Date   createTime;
     @TableLogic
     private Integer deleted;
 }

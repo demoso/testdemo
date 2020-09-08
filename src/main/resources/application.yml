@@ -8,7 +8,7 @@ spring:
     time-zone: GMT+8
     default-property-inclusion: non_null
   datasource:
-    url: jdbc:mysql://${MYSQL_HOST:192.168.1.225}:${MYSQL_PORT:3306}/hq_user?useUnicode=true&characterEncoding=UTF8
+    url: jdbc:mysql://${MYSQL_HOST:192.168.1.225}:${MYSQL_PORT:3306}/hq_user?useUnicode=true&characterEncoding=UTF8&serverTimezone=Asia/Shanghai
     username: root
     password: XJFxjf123
     type: com.zaxxer.hikari.HikariDataSource
