@@ -24,6 +24,11 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
         <dependency>
+            <groupId>com.hq.cloud</groupId>
+            <artifactId>hq-common-core</artifactId>
+            <version>3.8.0</version>
+        </dependency>
+        <dependency>
             <groupId>com.hq.cloud.jcache</groupId>
             <artifactId>hq-jcache-starter-redis-springdata</artifactId>
             <version>3.8.0</version>

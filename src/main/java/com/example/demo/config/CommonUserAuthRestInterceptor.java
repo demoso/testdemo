@@ -6,6 +6,7 @@ import com.example.demo.database.datasource.UserContextHandler;
 //import com.jf.geeker.auth.client.jwt.CommonUserAuthUtil;
 //import com.jf.geeker.auth.common.util.jwt.IJWTInfo;
 //import com.jf.geeker.common.context.BaseContextHandler;
+import com.hq.cloud.common.core.context.BaseContextHandler;
 import lombok.extern.slf4j.Slf4j;
 //import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,9 +44,12 @@ public class CommonUserAuthRestInterceptor extends HandlerInterceptorAdapter {
 //            return super.preHandle(request, response, handler);
 //        }
         String token = request.getHeader("token");
+        String tenantId = request.getHeader("tenantId");
+        log.info("--------->拦截:tenantId"+tenantId);
         String name  = request.getParameter("userId");
         UserContextHandler.setTenant(token);
         UserContextHandler.setUserId(name);
+        BaseContextHandler.setTenantId(tenantId);
 //        if (StringUtils.isEmpty(token)) {
 //            if (request.getCookies() != null) {
 //                for (Cookie cookie : request.getCookies()) {
@@ -65,6 +69,7 @@ public class CommonUserAuthRestInterceptor extends HandlerInterceptorAdapter {
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
         UserContextHandler.remove();
+        BaseContextHandler.remove();
         super.afterCompletion(request, response, handler, ex);
     }
 }
