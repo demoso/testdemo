@@ -8,6 +8,11 @@ import org.springframework.aop.framework.ProxyFactory;
 public class TestMethodInterceptor  {
 
     public static void main(String[] args) {
+        String a="dfdf";
+        String b= new String(a.getBytes());
+        if(a==b){
+            System.out.println("true");
+        }
         ProxyFactory proxyFactory=new ProxyFactory();
         proxyFactory.setTarget(new TestMethodInterceptor());
         proxyFactory.addAdvice(new adviseMethodInterceptor());

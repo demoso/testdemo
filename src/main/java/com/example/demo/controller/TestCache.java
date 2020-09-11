@@ -2,11 +2,15 @@ package com.example.demo.controller;
 
 import com.example.demo.entity.TestUser;
 import com.example.demo.mapper.TestUserMapper;
-import com.hq.cloud.jcache.anno.Cache;
+import com.hq.cloud.common.core.context.BaseContextHandler;
+import com.hq.cloud.jcache.Cache;
+import com.hq.cloud.jcache.CacheGetResult;
+import com.hq.cloud.jcache.anno.*;
+import com.hq.cloud.jcache.anno.aop.CachePointcut;
+import com.hq.cloud.jcache.anno.aop.JetCacheInterceptor;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 
@@ -16,20 +20,63 @@ public class TestCache {
     @Autowired
     private TestUserMapper testUserMapper;
 
+    @CreateCache(name = "abcdCache:", expire = 160)
+    private Cache<String, String> cache;
+    @CreateCache(name = "tcache", expire = 160)
+    private Cache<String, String> cache2;
+
     @RequestMapping("/hello")
     @ResponseBody
-    @Cache(name="abcdCache", key="#id", expire = 100)
+    @Cached(name="abcdCache:", key="#id", expire = 20)
     public String hello( int id) {
         try {
-            System.out.println("ddd");
+            System.out.println("自动Refresh");
+
+            cache2.PUT("aa","cc");
+            CacheGetResult<String> cc=cache2.GET("aa");
+            System.out.println("cc------>:"+ cc.getValue());
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
             System.out.println("释放锁..." + Thread.currentThread().getId());
         }
-        return  "welcome";
+        System.out.println("getTenantId------------------->"+BaseContextHandler.getTenantId());
+        return BaseContextHandler.getTenantId();
 
     }
+
+
+    @DeleteMapping("delete")
+    @ResponseBody
+    @CacheClear(name="abcdCache:", key="#id")
+    public String delete( int id) {
+        try {
+            System.out.println("----------------》删除完成");
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            System.out.println("释放锁..." + Thread.currentThread().getId());
+        }
+        System.out.println("getTenantId------------------->"+BaseContextHandler.getTenantId());
+        return BaseContextHandler.getTenantId();
+    }
+
+    @PostMapping("update")
+    @ResponseBody
+    @CacheUpdate(name="abcdCache:", key="#id",value = "'update9527'")
+    public String update( int id) {
+        try {
+            System.out.println("----------------》修改完成");
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            System.out.println("释放锁..." + Thread.currentThread().getId());
+        }
+        System.out.println("getTenantId------------------->"+BaseContextHandler.getTenantId());
+        return cache.GET("abcdCache:"+BaseContextHandler.getTenantId()+":"+id).getValue();
+    }
+
+
     @RequestMapping("/update")
     @ResponseBody
     public String update(Long id){
@@ -47,6 +94,7 @@ public class TestCache {
         testUsers2.setMobile("18908519528");
         testUsers2.setNickName("ooo");
          testUserMapper.insert(testUsers2);
+
         return "ok";
     }
 }
