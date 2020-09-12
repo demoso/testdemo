@@ -4,6 +4,9 @@ import org.junit.Test;
 
 import java.util.function.Function;
 
+/**
+ * Lambda 是一个匿名函数，我们可以把 Lambda表达式理解为是一段可以传递的代码
+ */
 public class FunctionTest {
     //Function<T, R> 函数型接口：
     @Test
