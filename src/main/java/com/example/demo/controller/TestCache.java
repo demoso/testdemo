@@ -27,7 +27,7 @@ public class TestCache {
 
     @RequestMapping("/hello")
     @ResponseBody
-    @Cached(name="abcdCache:", key="#id", expire = 20)
+    @Cached( key="#id", expire = 160)
     public String hello( int id) {
         try {
             System.out.println("自动Refresh");
@@ -48,7 +48,7 @@ public class TestCache {
 
     @DeleteMapping("delete")
     @ResponseBody
-    @CacheClear(name="abcdCache:", key="#id")
+    @CacheClear( key="#id")
     public String delete( int id) {
         try {
             System.out.println("----------------》删除完成");
@@ -63,8 +63,8 @@ public class TestCache {
 
     @PostMapping("update")
     @ResponseBody
-    @CacheUpdate(name="abcdCache:", key="#id",value = "'update9527'")
-    public String update( int id) {
+    @CacheUpdate(key="#id",value = "'update9527'")
+    public Long update( int id) {
         try {
             System.out.println("----------------》修改完成");
         } catch (Exception e) {
@@ -73,7 +73,7 @@ public class TestCache {
             System.out.println("释放锁..." + Thread.currentThread().getId());
         }
         System.out.println("getTenantId------------------->"+BaseContextHandler.getTenantId());
-        return cache.GET("abcdCache:"+BaseContextHandler.getTenantId()+":"+id).getValue();
+        return Thread.currentThread().getId();
     }
 
 
