@@ -1,6 +1,6 @@
 spring:
   application:
-    name: mytestPj0
+    name: app-jjgggggggg
   messages:
     basename: i18n/messages
   jackson:
