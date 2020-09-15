@@ -27,7 +27,7 @@ public class TestCache {
 
     @RequestMapping("/hello")
     @ResponseBody
-    @Cached( key="#id", expire = 160)
+    @Cached( name = "hello", key="#id", expire = 160)
     public String hello( int id) {
         try {
             System.out.println("自动Refresh");
@@ -48,7 +48,7 @@ public class TestCache {
 
     @DeleteMapping("delete")
     @ResponseBody
-    @CacheClear( key="#id")
+    @CacheClear(name = "hello", key="#id")
     public String delete( int id) {
         try {
             System.out.println("----------------》删除完成");
@@ -63,7 +63,7 @@ public class TestCache {
 
     @PostMapping("update")
     @ResponseBody
-    @CacheUpdate(key="#id",value = "'update9527'")
+    @CacheUpdate(name = "hello",key="#id",value = "'update9527'")
     public Long update( int id) {
         try {
             System.out.println("----------------》修改完成");
