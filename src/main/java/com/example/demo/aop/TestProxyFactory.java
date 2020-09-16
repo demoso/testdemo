@@ -7,7 +7,11 @@ import org.springframework.aop.MethodBeforeAdvice;
 import org.springframework.aop.framework.ProxyFactory;
 import org.aopalliance.intercept.MethodInterceptor;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.Method;
+import java.util.Properties;
+import java.util.ServiceLoader;
 
 public class TestProxyFactory {
 
@@ -102,4 +106,49 @@ public class TestProxyFactory {
 
 
     }
+
+
+
+    @Test
+    public  void getImplClass(){
+        Person person= new Man();
+        ServiceLoader<Person> loader = ServiceLoader.load(Person.class);
+        // 输出集合中的所有元素
+        while(loader.iterator().hasNext()) {
+            System.out.println(loader.iterator().next().eat("ere"));
+        }
+
+    }
+//    @Test
+//    public String getYmlRedisPasswordValue(){
+//        Map<String,Object> obj =null;
+//        try {
+//            Yaml yaml = new Yaml();
+//            InputStream resourceAsStream = TestProxyFactory.class.getClassLoader().getResourceAsStream("application.yml");
+//            obj = (Map) yaml.load(resourceAsStream);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        Map<String,Object> spring=(Map<String,Object>)obj.get("spring");
+//        Map<String,Object> redis=(Map<String,Object>)spring.get("redis");
+//        String password=(String)redis.get("password");
+//        return password;
+//    }
+
+    @Test
+    public void getCommonCfg(){
+        String value=null;
+
+        try {
+            Properties properties = new Properties();
+            properties.load(TestProxyFactory.class.getClassLoader().getResourceAsStream("common.properties1"));
+            value=properties.getProperty("jf.content.browse.weight");
+        } catch (IOException e) {
+            System.out.println(value);
+        }finally {
+
+        }
+        System.out.println(value);
+    }
+
 }

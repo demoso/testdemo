@@ -1,5 +1,6 @@
 package com.example.demo.beanfactory;
 
+import com.example.demo.aop.TestProxyFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.BeanNameAware;
@@ -18,7 +19,10 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.context.support.StandardServletEnvironment;
 
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.Method;
+import java.util.Properties;
 
 /**
  * 第1行： specialBeanForEngine  bean 先生成
@@ -47,6 +51,18 @@ public class SpecialBeanForEngine implements BeanFactoryPostProcessor, BeanNameA
 ////        ConfigurableApplicationContext context = createApplicationContext();
 //        ConfigurableEnvironment environment= new StandardServletEnvironment();
 //       String name= environment.getProperty("spring.application.name");
+        String value=null;
+        try {
+            Properties properties = new Properties();
+            InputStream in=Thread.currentThread().getContextClassLoader().getResourceAsStream("common.properties");
+            properties.load(in);
+            value=properties.getProperty("jf.content.browse.weight");
+            in.close();
+        } catch (Exception e) {
+            log.error(" zhelid->>>>>>>>>>>");
+        }
+
+        System.out.println(value);
 
         BeanDefinitionRegistry bdr = (BeanDefinitionRegistry)beanFactory;
         GenericBeanDefinition gbd = new GenericBeanDefinition();
