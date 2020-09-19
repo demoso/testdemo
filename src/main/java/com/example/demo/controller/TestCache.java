@@ -1,5 +1,8 @@
 package com.example.demo.controller;
 
+import com.alibaba.fastjson.JSON;
+import com.example.demo.condition.Person;
+import com.example.demo.config.RedisService;
 import com.example.demo.entity.TestUser;
 import com.example.demo.mapper.TestUserMapper;
 import com.hq.cloud.common.core.context.BaseContextHandler;
@@ -18,6 +21,8 @@ import java.util.Date;
 @RestController
 public class TestCache {
     @Autowired
+    private RedisService redisService;
+    @Autowired
     private TestUserMapper testUserMapper;
 
     @CreateCache(name = "abcdCache:", expire = 160)
@@ -27,10 +32,17 @@ public class TestCache {
 
     @RequestMapping("/hello")
     @ResponseBody
-    @Cached( name = "hello", key="#id", expire = 160)
+   // @Cached( name = "hello", key="#id", expire = 160)
     public String hello( int id) {
         try {
-            System.out.println("自动Refresh");
+
+            Person person= new Person();
+            person.setAge(id);
+            person.setName("dfdfd"+id);
+            String key ="user222"+id;
+            redisService.set(key,person);
+            Person person1 = (Person)redisService.get(key);
+            System.out.println(JSON.toJSONString(person1));
 
             cache2.PUT("aa","cc");
             CacheGetResult<String> cc=cache2.GET("aa");
