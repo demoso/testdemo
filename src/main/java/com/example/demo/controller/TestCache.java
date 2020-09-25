@@ -114,7 +114,7 @@ public class TestCache {
 
     @RequestMapping("/testAuth")
     @ResponseBody
-    @PreAuthorize("hasRole('ADMIN1')")
+    @PreAuthorize("@p.hasRole('Admin')")
     public String testauth( int id) {
         return "OK";
     }

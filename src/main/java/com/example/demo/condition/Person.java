@@ -1,5 +1,8 @@
 package com.example.demo.condition;
 
+import lombok.Builder;
+
+@Builder
 public class Person {
 
     private String name;
@@ -28,7 +31,15 @@ public class Person {
 
     public Person() {
     }
+    public boolean hasRole(String name) {
+        System.out.println("-->p.hasRole");
+        if(name.equals("Admin")){
+            return true;
+        }else {
+            return false;
+        }
 
+    }
     @Override
     public String toString() {
         return "Person{" + "name='" + name + '\'' + ", age=" + age + '}';
