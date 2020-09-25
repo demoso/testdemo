@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.example.demo.authrize.annotation.PreAuthorize;
 import com.example.demo.condition.Person;
 import com.example.demo.config.RedisService;
 import com.example.demo.entity.TestUser;
@@ -108,5 +109,13 @@ public class TestCache {
          testUserMapper.insert(testUsers2);
 
         return "ok";
+    }
+
+
+    @RequestMapping("/testAuth")
+    @ResponseBody
+    @PreAuthorize("hasRole('ADMIN1')")
+    public String testauth( int id) {
+        return "OK";
     }
 }
