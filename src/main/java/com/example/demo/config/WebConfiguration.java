@@ -4,6 +4,7 @@ package com.example.demo.config;
 //import com.jf.geeker.auth.client.interceptor.ServiceAuthRestInterceptor;
 //import com.jf.geeker.auth.client.interceptor.UserAuthRestInterceptor;
 //import com.jf.geeker.common.handler.GlobalExceptionHandler;
+import com.example.demo.interceptor.ClientAuthInterceptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -31,7 +32,7 @@ public class WebConfiguration implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
 //        registry.addInterceptor(getServiceAuthRestInterceptor())
 //                .addPathPatterns("/api/**");
-        registry.addInterceptor(getUserAuthRestInterceptor()).
+        registry.addInterceptor(getClientInterceptor()).
                 addPathPatterns(getIncludePathPatterns());
 //        registry.addInterceptor(getAdminUserAuthRestInterceptor()).addPathPatterns("/admin/**");
     }
@@ -42,8 +43,8 @@ public class WebConfiguration implements WebMvcConfigurer {
 //    }
 
     @Bean
-    CommonUserAuthRestInterceptor getUserAuthRestInterceptor() {
-        return new CommonUserAuthRestInterceptor();
+    ClientAuthInterceptor getClientInterceptor() {
+        return new ClientAuthInterceptor();
     }
 //
 //    @Bean
