@@ -21,7 +21,7 @@ import java.util.Collections;
 * @date 2018/11/15 15:52
 */
 @Configuration
-public class WebConfiguration implements WebMvcConfigurer {
+public class WebConfiguration2 implements WebMvcConfigurer {
 //    @Bean
 //    GlobalExceptionHandler getGlobalExceptionHandler() {
 //        return new GlobalExceptionHandler();
@@ -29,10 +29,10 @@ public class WebConfiguration implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-//        registry.addInterceptor(getServiceAuthRestInterceptor())
-//                .addPathPatterns("/api/**");
-        registry.addInterceptor(getClientInterceptor()).
-                addPathPatterns(getIncludePathPatterns());
+        registry.addInterceptor(getCommonUserAuthRestInterceptor())
+                .addPathPatterns(getIncludePathPatterns());
+//        registry.addInterceptor(getClientInterceptor()).
+//                addPathPatterns(getIncludePathPatterns());
 //        registry.addInterceptor(getAdminUserAuthRestInterceptor()).addPathPatterns("/admin/**");
     }
 
@@ -41,15 +41,15 @@ public class WebConfiguration implements WebMvcConfigurer {
 //        return new ServiceAuthRestInterceptor();
 //    }
 
-    @Bean
-    ClientAuthInterceptor getClientInterceptor() {
-        return new ClientAuthInterceptor();
-    }
-//
 //    @Bean
-//    UserAuthRestInterceptor getAdminUserAuthRestInterceptor(){
-//         return new UserAuthRestInterceptor();
+//    ClientAuthInterceptor getClientInterceptor() {
+//        return new ClientAuthInterceptor();
 //    }
+
+    @Bean
+    CommonUserAuthRestInterceptor getCommonUserAuthRestInterceptor(){
+         return new CommonUserAuthRestInterceptor();
+    }
 
     /**
      * 需要用户和服务认证判断的路径

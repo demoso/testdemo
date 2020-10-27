@@ -19,7 +19,7 @@ public class ClientAuthInterceptor extends HandlerInterceptorAdapter {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        HandlerMethod handlerMethod = (HandlerMethod) handler;
+       // HandlerMethod handlerMethod = (HandlerMethod) handler;
         logger.info("request.getRequestURI:"+request.getRequestURI());
         logger.info("request.getRemoteHost:"+request.getRemoteHost());
         logger.info("request.getRequestURL:"+request.getRequestURL());
