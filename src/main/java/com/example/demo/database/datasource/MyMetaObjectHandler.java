@@ -72,7 +72,7 @@
 //    @Override
 //    public void insertFill(MetaObject metaObject) {
 //        boolean flag = true;
-//         设置创建时间和创建人
+//        // 设置创建时间和创建人
 //        if (metaObject.getOriginalObject() instanceof SuperEntity) {
 //            Object oldId = ((SuperEntity) metaObject.getOriginalObject()).getId();
 //            if (oldId != null) {
@@ -89,13 +89,13 @@
 //            }
 //        }
 //
-//         修改人 修改时间
+//        // 修改人 修改时间
 //        if (metaObject.getOriginalObject() instanceof Entity) {
 //            Entity entity = (Entity) metaObject.getOriginalObject();
 //            update(metaObject, entity);
 //        }
 //
-//         若 ID 中有值，就不设置
+//         //若 ID 中有值，就不设置
 //        if (!flag) {
 //            return;
 //        }
@@ -107,25 +107,25 @@
 //            return;
 //        }
 //
-//         实体没有继承 Entity 和 SuperEntity
+//        // 实体没有继承 Entity 和 SuperEntity
 //        TableInfo tableInfo = metaObject.hasGetter(Constants.MP_OPTLOCK_ET_ORIGINAL) ?
 //                TableInfoHelper.getTableInfo(metaObject.getValue(Constants.MP_OPTLOCK_ET_ORIGINAL).getClass())
 //                : TableInfoHelper.getTableInfo(metaObject.getOriginalObject().getClass());
 //        if (tableInfo == null) {
 //            return;
 //        }
-//         主键类型
+//        // 主键类型
 //        Class<?> keyType = tableInfo.getKeyType();
 //        if (keyType == null) {
 //            return;
 //        }
-//         id 字段名
+//        // id 字段名
 //        String keyProperty = tableInfo.getKeyProperty();
 //
-//         反射得到 主键的值
+//         //反射得到 主键的值
 //        Field idField = ReflectUtil.getField(metaObject.getOriginalObject().getClass(), keyProperty);
 //        Object fieldValue = ReflectUtil.getFieldValue(metaObject.getOriginalObject(), idField);
-//         判断ID 是否有值，有值就不
+//        // 判断ID 是否有值，有值就不
 //        if (ObjectUtil.isNotEmpty(fieldValue)) {
 //            return;
 //        }
