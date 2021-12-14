@@ -9,13 +9,7 @@ import java.util.function.Supplier;
 public class CompletableFT {
 
     public static void main(String[] args) {
-        /**
-         * 无需返回
-         */
 
-        CompletableFuture.runAsync(() -> {
-            System.out.println("Hello");
-        });
 
         /**
          * CompletableFuture可以从全局的 ForkJoinPool.commonPool()获得一个线程中执行这些任务
@@ -41,11 +35,20 @@ public class CompletableFT {
         CompletableFuture<String> future2 = CompletableFuture.supplyAsync(() -> {
             try {
                 TimeUnit.SECONDS.sleep(3);
+                System.out.println("s:自定义线程池");
             } catch (InterruptedException e) {
                 throw new IllegalStateException(e);
             }
             return "Result of the asynchronous computation";
         }, executorService);
+
+        /**
+         * 无需返回
+         */
+
+        CompletableFuture.runAsync(() -> {
+            System.out.println("Hello");
+        });
 
         try{
             //会阻塞
