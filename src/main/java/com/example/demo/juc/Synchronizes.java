@@ -47,11 +47,11 @@ public class Synchronizes
 
     public static void main(String[] args) throws InterruptedException {
 
-        new Thread(new Runnable() {
-            @SneakyThrows
-            @Override
-            public void run() {
+        new Thread(() -> {
+            try {
                 Synchronizes.basePo();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
         }).start();
         new Thread(new Runnable() {
